@@ -8,13 +8,12 @@ import utils
 CUDA_device = "cuda:0" if is_available() else "cpu"
 torch_dtype = float16 if is_available() else float32
 model_path = "cache/models--openai--whisper-large-v3/snapshots/1ecca609f9a5ae2cd97a576a9725bc714c022a93"
+model_name = "openai/whisper-large-v3"
 
-class speech_recognition():
+class auto_speech_recorder():
     def __init__(self, segment_folder="output_segment", segment_base="segment", log_folder="log", log_name="recognized_text_log"):
-        self.processor = AutoProcessor.from_pretrained(model_path, local_files_only=True)
-        self.model = AutoModelForSpeechSeq2Seq.from_pretrained(
-            model_path, torch_dtype=torch_dtype, local_files_only=True
-        ).to(CUDA_device)
+        self.processor = AutoProcessor.from_pretrained(model_path, local_files_only=True) if utils.find(model_path, "preprocessor_config.json") else AutoProcessor.from_pretrained(model_name, cache_dir="cache")
+        self.model = AutoModelForSpeechSeq2Seq.from_pretrained(model_path, torch_dtype=torch_dtype, local_files_only=True).to(CUDA_device) if utils.find(model_path, "config.json") else AutoModelForSpeechSeq2Seq.from_pretrained(model_name, torch_dtype=torch_dtype, cache_dir="cache").to(CUDA_device)
         self.pipeline = pipeline(
             "automatic-speech-recognition",
             model=self.model,
@@ -77,7 +76,7 @@ class speech_recognition():
                 if record_counter > int(record_limit * rate / chunk):
                     record = True
                 
-                if vol > self.THRESHOLD:
+                if vol > threshold:
                     record_counter += 1
                 else:
                     record_counter = 0
@@ -88,10 +87,12 @@ class speech_recognition():
         return path
     
     def audio_recognition(self, path):
-        result = self.pipeline(path, generate_kwargs={"language": "korean"})
-        output = result["text"][1:]
-        utils.save_recognized_text(output, log_folder=self.log_folder, log_name=self.log_name)
-        return output
+        output = self.pipeline(path, generate_kwargs={"language": "korean"})
+        text = output["text"][1:]
+        utils.save_recognized_text(text, log_folder=self.log_folder, log_name=self.log_name)
+        return text
 
-
+    def auto_speech_record(self, silence_limit=1.0, record_limit=0.03, threshold=400, format=pyaudio.paInt16, channels=1, rate=44100, chunk=1024):
+        path = self.record(silence_limit, record_limit, threshold, format, channels, rate, chunk)
+        return self.audio_recognition(path)
 

@@ -3,6 +3,18 @@ import wave
 import pyaudio
 import datetime
 
+def mkdir_unless_exist(folder_name):
+    if not os.path.exists(folder_name):
+        os.makedirs(folder_name)
+
+def find(folder_path, file_name):
+    mkdir_unless_exist(folder_path)
+    file_list = os.listdir(folder_path)
+    if file_name in file_list:
+        return True
+    else:
+        return False
+    
 def remove_all_files(folder_path):
     '''
     remove all files in folder
@@ -18,8 +30,7 @@ def save_wave_segment(frames, segment_folder, segment_base, format, channels, ra
     save wavfile
     '''
 
-    if not os.path.exists(segment_folder):
-        os.makedirs(segment_folder)
+    mkdir_unless_exist(segment_folder)
     
     output_path = os.path.join(segment_folder, f"{segment_base}_{len(os.listdir(segment_folder)) + 1}.wav")
 
@@ -32,12 +43,11 @@ def save_wave_segment(frames, segment_folder, segment_base, format, channels, ra
     return output_path
 
 def save_recognized_text(text, log_folder, log_name):
-    if not os.path.exists(log_folder):
-        os.makedirs(log_folder)
+    mkdir_unless_exist(log_folder)
 
     output_path = os.path.join(log_folder, f"{log_name}.txt")
 
     f = open(output_path,'a', encoding='UTF-8')
-    f.write(datetime.datetime.now(), text+'\n')
+    f.write(str(datetime.datetime.now()) + " | " + text+'\n')
     f.close()
    
