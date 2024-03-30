@@ -2,7 +2,7 @@
 
 ## Summary
 
- * 사용자가 발화를 시작하는 지점과 끝내는 지점을 인식하여 발화를 녹음하고, openai의 Auto Speech Recognition 모델인 whisper-large-v3를 사용해 녹음된 발화를 인식하여 문자열로 반환하는 일련의 과정을 자동화한 도구입니다. 
+ * 사용자가 발화를 시작하는 지점과 끝내는 지점을 인식하여 발화를 녹음하고, openai의 Auto Speech Recognition 모델인 `whisper-large-v3`를 사용해 녹음된 발화를 인식하여 문자열로 반환하는 일련의 과정을 자동화한 도구입니다. 
  * Windows에서 CUDA를 통한 GPU 추론, CPU 추론을 지원합니다.
 
 ## Setup Environment(Windows)
@@ -41,7 +41,7 @@
 
 ## License
 
-
+  * Apache License 2.0
 
 ## Contact
 
