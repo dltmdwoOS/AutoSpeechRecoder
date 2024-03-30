@@ -12,13 +12,17 @@
     ```bash
     git clone https://github.com/dltmdwoOS/AutoSpeechRecord
     ```
+    
  2. 파이썬 가상환경을 생성합니다.(Anaconda 환경을 가정합니다.)
+
     ```bash
     conda create -n py311 python=3.11
     conda activate py311
     ```
- 3. [PyTorch](https://pytorch.org/get-started/locally/)를 설치합니다.
- 4. 프로젝트 종속성을 설치합니다.
+ 
+ 4. [PyTorch](https://pytorch.org/get-started/locally/)를 설치합니다.
+ 5. 프로젝트 종속성을 설치합니다.
+
     ```bash
     pip install -r requirements.txt
     ```
@@ -26,14 +30,19 @@
 ## How to use(jupyter notebook)
 
 1. `AutoSpeechRecord.py`를 import합니다.
+  
   ```python
   import AutoSpeechRecord
   ```
+
 2. 객체 `auto_speech_record`를 생성합니다.
+  
   ```python
   recorder = AutoSpeechRecord.auto_speech_recorder()
   ``` 
+
 3. 메소드 `auto_speech_record()`를 사용합니다.
+  
   ```python
   recoder.auto_speech_record()
   ```
