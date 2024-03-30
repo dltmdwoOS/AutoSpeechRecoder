@@ -38,7 +38,7 @@
 2. 객체 `auto_speech_record`를 생성합니다.
   
   ```python
-  recorder = AutoSpeechRecord.auto_speech_recorder()
+  recorder = AutoSpeechRecord.auto_speech_record()
   ``` 
 
 3. 메소드 `auto_speech_record()`를 사용합니다.

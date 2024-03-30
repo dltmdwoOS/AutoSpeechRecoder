@@ -10,7 +10,7 @@ torch_dtype = float16 if is_available() else float32
 model_path = "cache/models--openai--whisper-large-v3/snapshots/1ecca609f9a5ae2cd97a576a9725bc714c022a93"
 model_name = "openai/whisper-large-v3"
 
-class auto_speech_recorder():
+class auto_speech_record():
     def __init__(self, segment_folder="output_segment", segment_base="segment", log_folder="log", log_name="recognized_text_log"):
         self.processor = AutoProcessor.from_pretrained(model_path, local_files_only=True) if utils.find(model_path, "preprocessor_config.json") else AutoProcessor.from_pretrained(model_name, cache_dir="cache")
         self.model = AutoModelForSpeechSeq2Seq.from_pretrained(model_path, torch_dtype=torch_dtype, local_files_only=True).to(CUDA_device) if utils.find(model_path, "config.json") else AutoModelForSpeechSeq2Seq.from_pretrained(model_name, torch_dtype=torch_dtype, cache_dir="cache").to(CUDA_device)

@@ -39,7 +39,7 @@
 2. Construct an `auto_speech_record` object.
   
   ```python
-  recorder = AutoSpeechRecord.auto_speech_recorder()
+  recorder = AutoSpeechRecord.auto_speech_record()
   ``` 
 
 3. Use `auto_speech_record()` method.
